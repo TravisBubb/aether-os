@@ -1,0 +1,9 @@
+services:
+  aetheros-build:
+    build: .
+    volumes:
+      - .:/usr/src/aetheros
+      - ./build:/usr/src/aetheros/build
+    working_dir: /usr/src/aetheros
+    stdin_open: true
+    tty: true
