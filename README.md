@@ -58,9 +58,9 @@ Before building AetherOS, ensure you have the following prerequisites installed:
 ### Running AetherOS
 
 You can run AetherOS using QEMU, which is a system emulator. The provided scripts/run.sh script can be used to boot the kernel image in QEMU:
-    ```bash
-    ./scripts/run.sh
-    ```
+```bash
+./scripts/run.sh
+```
 
 ### Debugging
 
