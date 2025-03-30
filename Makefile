@@ -3,8 +3,12 @@ LD = x86_64-elf-ld
 GDB = x86_64-elf-gdb
 AS = nasm
 
-CFLAGS = -ffreestanding -O2 -Wall -Wextra -g = -Ikernel/include
-LDFLAGS = -T src/boot/linker.ld
+CFLAGS = -ffreestanding -nostdlib -O2 -Wall -Wextra -g \
+		 -Iinclude/kernel \
+		 -Iinclude/c \
+		 -Iinclude/libc \
+		 -Iinclude/sys
+LDFLAGS = -T boot/linker.ld
 ASFLAGS = -f elf64 -g
 
 # Output files
