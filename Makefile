@@ -3,12 +3,13 @@ LD = x86_64-elf-ld
 GDB = x86_64-elf-gdb
 AS = nasm
 
-CFLAGS = -ffreestanding -nostdlib -O2 -Wall -Wextra -g \
+CFLAGS = -ffreestanding -nostdlib -nostartfiles -mno-red-zone \
+		 -O0 -Wall -Wextra -g \
 		 -Iinclude/kernel \
 		 -Iinclude/c \
 		 -Iinclude/libc \
 		 -Iinclude/sys
-LDFLAGS = -T boot/linker.ld
+LDFLAGS = -T src/boot/linker.ld
 ASFLAGS = -f elf64 -g
 
 # Output files
@@ -19,7 +20,10 @@ KERNEL_BIN = $(BUILD_DIR)/kernel.bin
 KERNEL_ISO = $(BUILD_DIR)/aether.iso
 
 # Source files
-SOURCES = $(wildcard src/kernel/*.c) $(wildcard src/boot/*.asm)
+SOURCES = $(wildcard src/kernel/*.c) \
+		  $(wildcard src/c/*.c) \
+		  $(wildcard src/libc/*.c) \
+		  $(wildcard src/boot/*.asm)
 OBJECTS = $(filter %.o, $(patsubst %.c, $(BUILD_DIR)/%.o, $(SOURCES)) $(patsubst %.asm, $(BUILD_DIR)/%.o, $(SOURCES)))
 GRUB_CFG = src/boot/grub.cfg
 

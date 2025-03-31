@@ -6,7 +6,7 @@ SECTIONS
 
     /* The Multiboot2 header is placed at the beginning */
     .multiboot2_header : {
-        *(.multiboot2)
+        *(.multiboot2_header)
     }
 
     /* The text section (kernel code) starts after the Multiboot2 header */
@@ -33,4 +33,3 @@ SECTIONS
 		*(.bss)
 	}
 }
-
