@@ -22,7 +22,7 @@ typedef uint8_t vga_color_entry_t;
  * @typedef vga_character_entry_t
  * @brief VGA Character Entry definition
  */
-typedef unsigned char vga_character_entry_t;
+typedef uint8_t vga_character_entry_t;
 
 /**
  * @typedef vga_entry_t
@@ -58,7 +58,7 @@ typedef enum {
 /**
  * @brief Represents the VGA text-mode screen
  */
-typedef struct __attribute__((aligned(8))){
+typedef struct __attribute__((aligned(8))) {
   volatile vga_entry_t *buffer;   ///< The VGA text buffer
   vga_color_entry_t color_scheme; ///< The VGA color scheme
   uint8_t row;                    ///< The current row position
@@ -74,7 +74,7 @@ typedef struct __attribute__((aligned(8))){
  * @returns A vga_color_entry_t representing the desired VGA color scheme.
  */
 static inline vga_color_entry_t vga_color_entry(VgaColor fg, VgaColor bg) {
-  return (vga_color_entry_t)fg | ((vga_color_entry_t)bg << 4);
+  return (vga_color_entry_t)(fg | (bg << 4));
 }
 
 /**
@@ -90,7 +90,7 @@ static inline vga_color_entry_t vga_color_entry(VgaColor fg, VgaColor bg) {
  */
 static inline vga_entry_t vga_entry(vga_character_entry_t c,
                                     vga_color_entry_t color) {
-  return (vga_entry_t)c | ((vga_entry_t)color << 8);
+  return (vga_entry_t)(c | (color << 8));
 }
 
 /**

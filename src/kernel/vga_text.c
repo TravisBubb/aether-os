@@ -3,6 +3,8 @@
 #include <stddef.h>
 #include <string.h>
 
+static void vga_write_newline(VgaWriter *writer);
+
 int vga_clear_screen(VgaWriter *writer) {
   if (writer == NULL)
     return VGA_ERROR_NULL_WRITER;
@@ -33,11 +35,16 @@ int vga_write_string(VgaWriter *writer, const char *str) {
 
   for (size_t i = 0; i < len; i++) {
     const size_t idx = writer->row * VGA_BUFFER_WIDTH + writer->column;
+
+    if (str[i] == '\n') {
+      vga_write_newline(writer);
+      continue;
+    }
+
     writer->buffer[idx] = vga_entry(str[i], writer->color_scheme);
 
-    // TODO: Handle line wrapping
-
-    // TODO: Handle formatting if we receive a \n or \t character
+    if (writer->column++ == VGA_BUFFER_WIDTH)
+      vga_write_newline(writer);
   }
 
   return VGA_SUCCESS;
@@ -51,4 +58,11 @@ int vga_set_cursor(VgaWriter *writer, size_t row, size_t column) {
   writer->column = column;
 
   return VGA_SUCCESS;
+}
+
+static void vga_write_newline(VgaWriter *writer) {
+  writer->column = 0;
+  writer->row++;
+
+  // TODO: Handle row wraparound / scrolling
 }
