@@ -55,11 +55,12 @@ RUN cd /usr/src/toolchain && \
 ENV PATH="$PREFIX/bin:$PATH"
 
 # Set working directory
+
 WORKDIR /usr/src/aetheros
 
 COPY Makefile ./
-COPY src/ ./src/
 COPY include/ ./include/
+COPY src/kernel/ ./src/kernel/
 
 COPY . .
 
