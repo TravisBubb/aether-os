@@ -5,8 +5,8 @@ SECTIONS
     . = 1M;
 
     /* The Multiboot2 header is placed at the beginning */
-    .multiboot2_header : {
-        *(.multiboot2_header)
+    .boot : {
+        KEEP(*(.multiboot_header))
     }
 
     /* The text section (kernel code) starts after the Multiboot2 header */
