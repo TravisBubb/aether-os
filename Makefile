@@ -15,7 +15,8 @@ CFLAGS = -ffreestanding -nostdlib -nostartfiles -mno-red-zone \
 		 -I$(CURDIR)/include/sys \
 		 -I$(CURDIR)/include/kernel \
 		 -I$(CURDIR)/include/kernel/drivers \
-		 -I$(CURDIR)/include/kernel/logging
+		 -I$(CURDIR)/include/kernel/logging \
+		 -I$(CURDIR)/tests/include
 LD = x86_64-elf-ld
 LDFLAGS = -g -T $(ARCH_DIR)/linker.ld
 GDB = x86_64-elf-gdb
@@ -26,6 +27,7 @@ export CC CFLAGS
 SRC = src
 KERNEL = $(SRC)/kernel
 LIBC = $(SRC)/libc
+TEST = tests
 
 OBJDIR = obj
 LIBC_AR = $(OBJDIR)/libc/libc.a
@@ -35,8 +37,9 @@ LONG_MODE_INIT = $(OBJDIR)/long_mode_init.o
 KERNEL_OBJS = $(patsubst %.c, $(OBJDIR)/kernel/%.o, $(notdir $(wildcard $(KERNEL)/*.c)))
 KERNEL_AR = $(OBJDIR)/kernel/drivers/drivers.a \
 			$(OBJDIR)/kernel/logging/logging.a
-
-ARCHIVES = $(LIBC_AR)
+TEST_AR = $(OBJDIR)/tests/test_runner/test_runner.a \
+		  $(OBJDIR)/tests/core/core.a
+ARCHIVES = $(LIBC_AR) $(TEST_AR)
 
 .PHONY: all clean
 
@@ -48,7 +51,10 @@ $(KERNEL_OBJS):
 $(LIBC_AR):
 	$(MAKE) -C $(LIBC)
 
-$(KERNEL_BIN): $(LIBC_AR) $(KERNEL_OBJS) 
+$(TEST_AR):
+	$(MAKE) -C $(TEST)
+
+$(KERNEL_BIN): $(LIBC_AR) $(TEST_OBJS) $(KERNEL_OBJS) 
 	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) \
 		$(MULTIBOOT_HEADER) \
 		$(PROTECTED_MODE_INIT) \

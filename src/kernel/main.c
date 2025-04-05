@@ -2,6 +2,11 @@
 #include "serial.h"
 #include "vga.h"
 #include "vga_text.h"
+#include "test_runner.h"
+
+int sample_test(void){
+    return 0;
+}
 
 int kernel_main() {
   VgaWriter writer;
@@ -19,8 +24,8 @@ int kernel_main() {
   LOG_INFO("int: %d, str: %s\n", 912, "integer");
   LOG_INFO("int: %d, hex: %x\n", 912, 912);
 
-  while (1)
-    ;
+  register_test("T1", sample_test);
+  run_tests();
 
   return 0;
 }
