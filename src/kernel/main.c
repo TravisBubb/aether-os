@@ -15,7 +15,9 @@ int kernel_main() {
 
   serial_init();
 
-  LOG_INFO("this %s a test: %s", "IS", "Hello, World!");
+  LOG_INFO("this %s a test: %s\n", "IS", "Hello, World!");
+  LOG_INFO("int: %d, str: %s\n", 912, "integer");
+  LOG_INFO("int: %d, hex: %x\n", 912, 912);
 
   while (1)
     ;
