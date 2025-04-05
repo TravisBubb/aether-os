@@ -1,3 +1,4 @@
+#include "logging.h"
 #include "serial.h"
 #include "vga.h"
 #include "vga_text.h"
@@ -14,7 +15,7 @@ int kernel_main() {
 
   serial_init();
 
-  serial_write("This is a test string for serial\n:)");
+  LOG_INFO("this %s a test: %s", "IS", "Hello, World!");
 
   while (1)
     ;

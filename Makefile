@@ -17,7 +17,7 @@ CFLAGS = -ffreestanding -nostdlib -nostartfiles -mno-red-zone \
 		 -I$(CURDIR)/include/kernel/drivers \
 		 -I$(CURDIR)/include/kernel/logging
 LD = x86_64-elf-ld
-LDFLAGS = -T $(ARCH_DIR)/linker.ld
+LDFLAGS = -g -T $(ARCH_DIR)/linker.ld
 GDB = x86_64-elf-gdb
 AR = x86_64-elf-ar
 

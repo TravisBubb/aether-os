@@ -1,7 +1,7 @@
 #include "vga_text.h"
+#include "string_utils.h"
 #include "vga.h"
 #include <stddef.h>
-#include <string.h>
 
 static void vga_write_newline(VgaWriter *writer);
 
@@ -31,7 +31,7 @@ int vga_write_string(VgaWriter *writer, const char *str) {
   if (writer->buffer == NULL)
     return VGA_ERROR_NOT_INITIALIZED;
 
-  size_t len = strlen(str);
+  size_t len = aether_strlen(str);
 
   for (size_t i = 0; i < len; i++) {
     const size_t idx = writer->row * VGA_BUFFER_WIDTH + writer->column;
